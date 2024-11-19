@@ -3,23 +3,23 @@ using System;
 
 public partial class Killzone : Area2D
 {
+    [Export] 
+    private float time = 1.5f;
     private Timer timer;
     
     public override void _Ready()
     {
         timer = GetNode<Timer>("Timer");
-        timer.OneShot = true;
-        timer.Autostart = true;
     }
 
-    public void _on_body_entered(Node2D area)
+    private void _on_body_entered(Node2D area)
     {
         Player.dead = true;
         Engine.TimeScale = 0.5;
-        timer.Start(1.5);
+        timer.Start(time);
     }
 
-    public void _on_timer_timeout()
+    private void _on_timer_timeout()
     {
         GetTree().ReloadCurrentScene();
         GameManager.reset();

@@ -3,7 +3,8 @@ using System;
 
 public partial class Slime : CharacterBody2D
 {
-	private const float SPEED = 45;
+	[Export]
+	private float SPEED = 45;
 
 	private int dir = 1;
 	private AnimatedSprite2D sprite;
