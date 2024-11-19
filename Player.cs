@@ -10,12 +10,13 @@ public partial class Player : CharacterBody2D
 	
 	private PackedScene dagger = new PackedScene();
 	private AnimatedSprite2D player;
-	private static bool LR;
+	private static bool LR=false;
 	public static bool dead;
 
 	public override void _Ready()
 	{
 		player = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+		dagger = GD.Load<PackedScene>("res://Scenes/dagger.tscn");
 	}
 		
 	public override void _PhysicsProcess(double delta)
@@ -25,8 +26,8 @@ public partial class Player : CharacterBody2D
 
 		if (!dead)
 		{
-			//shoot();
-			
+			shoot(LR);
+
 			velocity = Jump(velocity);
 
 			int direction = Move(velocity);
@@ -128,12 +129,13 @@ public partial class Player : CharacterBody2D
 		return velocity;
 	}
 
-	private void shoot()
+	private void shoot(bool LR)
 	{
 		if (Input.IsActionJustPressed("shoot"))
 		{
 			Dagger instDagger = dagger.Instantiate<Dagger>();
 			instDagger.Position = GlobalPosition;
+			instDagger.setDirection(LR);
 			GetTree().Root.AddChild(instDagger);
 			GD.Print("Shoot");
 		}
