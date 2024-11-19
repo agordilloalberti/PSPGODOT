@@ -16,6 +16,7 @@ public partial class Dagger : Area2D
 
     public override void _Process(double delta)
     {
+        //TODO: Make the dagger move as well as fix the nullPointerException.
         Vector2 position = Position;
         position.X += speed*direction*(float)delta;
         Position = position;
