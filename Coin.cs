@@ -8,7 +8,6 @@ public partial class Coin : Area2D
 	private void _on_body_entered(Node2D area)
 	{
 		GameManager.addPoints(points);
-		Hide();
-        Dispose();
+		QueueFree();
 	}
 }

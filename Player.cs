@@ -7,10 +7,12 @@ public partial class Player : CharacterBody2D
 	private float Speed = 130.0f;
 	[Export] 
 	private float JumpVelocity = -300.0f;
+	[Export]
+	private bool NoClip = false;
 	
-	private PackedScene dagger = new PackedScene();
+	private PackedScene dagger;
 	private AnimatedSprite2D player;
-	private static bool LR=false;
+	private static bool LR;
 	public static bool dead;
 
 	public override void _Ready()
@@ -35,7 +37,7 @@ public partial class Player : CharacterBody2D
 			velocity.X = direction * Speed;
 
 			velocity = animation(velocity,delta);
-
+			
 		}
 		else
 		{
@@ -45,8 +47,6 @@ public partial class Player : CharacterBody2D
 		Velocity = velocity;
 		MoveAndSlide();
 	}
-
-	
 	
 	
 	private Vector2 death(Vector2 velocity, double delta)
@@ -63,7 +63,6 @@ public partial class Player : CharacterBody2D
 		velocity += GetGravity() * (float)delta;
 		return velocity;
 	}
-
 
 	private Vector2 animation(Vector2 velocity,Double delta)
 	{
@@ -122,7 +121,9 @@ public partial class Player : CharacterBody2D
 
 	private Vector2 Jump(Vector2 velocity)
 	{
-		if (Input.IsActionJustPressed("jump") && IsOnFloor())
+		if (Input.IsActionJustPressed("jump")
+		    && (IsOnFloor() || NoClip)
+		    )
 		{
 			velocity.Y = JumpVelocity;
 		}
@@ -133,11 +134,15 @@ public partial class Player : CharacterBody2D
 	{
 		if (Input.IsActionJustPressed("shoot"))
 		{
-			Dagger instDagger = dagger.Instantiate<Dagger>();
+			Dagger instDagger = (Dagger) dagger.Instantiate();
 			instDagger.Position = GlobalPosition;
-			instDagger.setDirection(LR);
 			GetTree().Root.AddChild(instDagger);
-			GD.Print("Shoot");
+			instDagger.setDirection(LR);
 		}
+	}
+
+	public void enterCastle()
+	{
+		GD.Print("enter castle");
 	}
 }

@@ -1,3 +1,5 @@
+
+
 using Godot;
 using System;
 
@@ -23,7 +25,6 @@ public partial class Slime : CharacterBody2D
 		 rayCastRightDown = GetNode<RayCast2D>("RayCastRightDown");
 		 rayCastLeftDown = GetNode<RayCast2D>("RayCastLeftDown");
 	}
-
 	public override void _Process(double delta)
 	{
 		
@@ -37,8 +38,6 @@ public partial class Slime : CharacterBody2D
 			dir = 1;
 			sprite.FlipH = false;
 		}
-
-		
 	}
 
 	public override void _PhysicsProcess(double delta)
